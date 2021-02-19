@@ -10,11 +10,6 @@ def ForbiddenUsernames(value):
         raise ValidationError('Invalid name for user.')
 
 
-def InvalidUsername(value):
-    if '@' or '+' or '-' in value:
-        raise ValidationError('This is an Invalid username, do not use these chars: @, +, - ')
-
-
 def UniqueEmail(value):
     if User.objects.filter(email__iexact=value).exists():
         raise ValidationError('User with this email already exists.')
@@ -40,7 +35,6 @@ class SignupForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(SignupForm, self).__init__(*args, **kwargs)
         self.fields['username'].validators.append(ForbiddenUsernames)
-        self.fields['username'].validators.append(InvalidUsername)
         self.fields['username'].validators.append(UniqueUser)
         self.fields['email'].validators.append(UniqueEmail)
 
