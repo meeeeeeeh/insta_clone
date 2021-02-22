@@ -1,0 +1,94 @@
+{% load static %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/bulma.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+  </head>
+  <body>
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="{% url 'post:index' %}">
+      <img src="../static/img/logo.png" width="36" height="28">
+    </a>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="{%url 'post:index'%}">
+        <span class="material-icons">home</span>
+        Home
+      </a>
+
+      <a class="navbar-item">
+        <span class="material-icons">explore</span>
+        Explore
+      </a>
+      {% if request.user.is_authenticated %}
+      <a class="navbar-item">
+        <span class="material-icons">notifications</span>
+        Notifications
+      </a>
+
+      <a class="navbar-item">
+        <span class="material-icons">inbox</span>
+        Inbox
+      </a>
+
+      <a href="{% url 'authentification:profile' request.user.username %}" class="navbar-item">
+        <span class="material-icons">face</span>
+        Profile
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          <span class="material-icons">settings</span>
+          Settings
+        </a>
+
+        <div class="navbar-dropdown">
+          <a href="{% url 'authentification:change_password' %}" class="navbar-item">
+            Change Password
+          </a>
+          <a class="navbar-item">
+            Contact
+          </a>
+          <a class="navbar-item">
+            Report an issue
+          </a>
+          <hr class="navbar-divider">
+          <a href="{% url 'authentification:logout' %}" class="navbar-item">
+            Log out
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% if not request.user.is_authenticated %}
+    <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="buttons">
+                <a href="{% url 'authentification:signup' %}" class="button is-primary">
+                  <strong>Sign up</strong>
+                </a>
+               <a href="{% url 'authentification:login' %}" class="button is-light">
+                  Log in
+               </a>
+              </div>
+            </div>
+    </div>
+    {% endif %}
+  </div>
+</nav>
+ {% block content %}
+  {% endblock %}
+  </body>
+</html>

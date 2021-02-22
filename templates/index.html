@@ -1,96 +1,29 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../static/css/bulma.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-  </head>
-  <body>
-  <nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a class="navbar-item" href="{% url 'post:index' %}">
-      <img src="../static/img/logo.png" width="36" height="28">
-    </a>
-
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-
-  <div id="navbarBasicExample" class="navbar-menu">
-    <div class="navbar-start">
-      <a class="navbar-item" href="{%url 'post:index'%}">
-        <span class="material-icons">home</span>
-        Home
-      </a>
-
-      <a class="navbar-item">
-        <span class="material-icons">explore</span>
-        Explore
-      </a>
-
-      <a class="navbar-item">
-        <span class="material-icons">notifications</span>
-        Notifications
-      </a>
-
-      <a class="navbar-item">
-        <span class="material-icons">inbox</span>
-        Inbox
-      </a>
-
-      <a class="navbar-item">
-        <span class="material-icons">face</span>
-        Profile
-      </a>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          <span class="material-icons">settings</span>
-          Settings
-        </a>
-
-        <div class="navbar-dropdown">
-          <a class="navbar-item">
-            Change Password
-          </a>
-          <a class="navbar-item">
-            Contact
-          </a>
-          <a class="navbar-item">
-            Report an issue
-          </a>
-          <hr class="navbar-divider">
-          <a class="navbar-item">
-            Log out
-          </a>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</nav>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
   {% for post in posts %}
   <section class="section">
     <div class="container">
       <div class="columns is-mobile is-centered">
       <div class="column is-half">
       <div class="card">
+        <a href="{% url 'post:post_detail' post.pk %}">
   <div class="card-image">
     {% if post.content.first.file.name|slice:"-3:" == 'jpg' or post.content.first.file.name|slice:"-3:" == 'png' %}
     <figure class="image is-4by3">
+
       <img src="{{post.content.first.file.url}}" alt="Placeholder image">
+
     </figure>
     {% else %}
+
     <video width="1080" controls="controls" preload="metadata" autoplay muted loop>
       <source src="{{post.content.first.file.url}}#t=0.5" type="video/mp4">
     </video>
+
     {% endif %}
   </div>
+        </a>
   <div class="card-content">
     <div class="media">
       <div class="media-left">
@@ -100,7 +33,7 @@
       </div>
       <div class="media-content">
 <!--        <p class="title is-4">John Smith</p>-->
-        <p class="subtitle is-4">@{{post.user.username}}</p>
+        <p class="subtitle is-4"><a href="{% url 'authentification:profile' post.user.username %}">@{{post.user.username}}</a></p>
       </div>
     </div>
 
@@ -111,7 +44,7 @@
       <strong><small>{{post.posted}}</small></strong>
     </div>
     <div class="media-right">
-      <a href=""><i class="material-icons has-text-danger">favorite</i></a>
+      <a href="{% url 'post:post_like' post.id %}"><i class="material-icons has-text-danger">favorite</i></a>
       <p>{{ post.likes }} Likes</p>
     </div>
   </div>
@@ -121,5 +54,4 @@
     </div>
   </section>
 {% endfor %}
-  </body>
-</html>
+{% endblock %}
