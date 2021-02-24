@@ -15,11 +15,18 @@
                 <div class="content">
                 <h1 style="font-weight: bold;" class="title is-1">@{{user.username}}</h1>
                 <h2 class="subtitle is-3">Eric Cartman</h2>
+                {% if request.user != user %}
+                {% if follow_status == True %}
                 <div class="media-right">
-                <button class="button is-success">Follow</button>
+                <a href="{% url 'follow:unfollow' user.username %}" class="button is-danger">Unfollow</a>
+                </div>
+                    {% else%}
+                <div class="media-right">
+                <a href="{% url 'follow:follow' user.username %}" class="button is-success">Follow</a>
                 </div>
                 </div>
-
+                {% endif %}
+                {% endif %}
             <nav class="level is-mobile">
             <div class="level-item has-text-centered">
                 <div>
@@ -30,13 +37,13 @@
             <div class="level-item has-text-centered">
                 <div>
                 <p class="heading">Following</p>
-                <p class="title">123</p>
+                <p class="title">{{following_count}}</p>
                 </div>
             </div>
             <div class="level-item has-text-centered">
                 <div>
                 <p class="heading">Followers</p>
-                <p class="title">456K</p>
+                <p class="title">{{followers_count}}</p>
                 </div>
             </div>
 
@@ -44,7 +51,9 @@
                 <p class="subtitle is-5">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </p>
+                {% if request.user == user %}
                 <button class="button">Edit profile</button>
+                {% endif %}
             </div>
         </article>
     </div>

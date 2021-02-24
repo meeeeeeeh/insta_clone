@@ -44,7 +44,11 @@
       <strong><small>{{post.posted}}</small></strong>
     </div>
     <div class="media-right">
+        {% if request.user.is_authenticated %}
       <a href="{% url 'post:post_like' post.id %}"><i class="material-icons has-text-danger">favorite</i></a>
+        {% else %}
+        <a href="{% url 'authentification:login' %}"><i class="material-icons has-text-danger">favorite</i></a>
+        {% endif %}
       <p>{{ post.likes }} Likes</p>
     </div>
   </div>

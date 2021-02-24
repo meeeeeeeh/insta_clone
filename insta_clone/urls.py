@@ -7,6 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('authentification.urls')),
     path('', include('post.urls')),
+    path('', include('follow.urls')),
 ]
 
 
