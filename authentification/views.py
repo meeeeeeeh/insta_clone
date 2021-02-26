@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from django.urls import reverse_lazy
+
 from .forms import SignupForm, ChangePasswordForm, EditProfileForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, UpdateView
 from post.models import Post, Likes, Follow
 from django.shortcuts import get_object_or_404
+from .models import Profile
 
 
 def SignUp(request):
@@ -53,9 +56,21 @@ class UserProfile(TemplateView):
         context = super(UserProfile, self).get_context_data(**kwargs)
         user = get_object_or_404(User, username=kwargs["username"])
         context['user'] = user
+        context['profile'] = Profile.objects.get(user=user)
         context['follow_status'] = Follow.objects.filter(following=user, follower=self.request.user).exists()
         context['following_count'] = Follow.objects.filter(follower=user).count()
         context['followers_count'] = Follow.objects.filter(following=user).count()
         context['posts'] = Post.objects.filter(user=user).order_by('-posted')
 
         return context
+
+
+class EditProfile(UpdateView):
+    template_name = "edit_profile.html"
+    model = Profile
+    form_class = EditProfileForm
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('authentification:profile', kwargs={'username': self.request.user.username})
+
+

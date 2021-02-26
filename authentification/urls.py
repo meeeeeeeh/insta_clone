@@ -10,5 +10,6 @@ urlpatterns = [
     path('logout/', authViews.LogoutView.as_view(next_page=reverse_lazy('post:index')), name="logout"),
     path('change_password', PasswordChange, name='change_password'),
     path('change_password_done', PasswordChangeDone, name="change_password_done"),
-    path('profile/<username>', UserProfile.as_view(), name="profile")
+    path('profile/<username>', UserProfile.as_view(), name="profile"),
+    path('profile/edit_profile/<pk>', EditProfile.as_view(), name="edit_profile"),
 ]
