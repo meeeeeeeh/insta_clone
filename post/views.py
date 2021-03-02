@@ -22,8 +22,6 @@ class HomeView(ListView):
         return post_items
 
 
-
-
 @login_required
 def like(request, pk):
     user = request.user
@@ -73,7 +71,7 @@ def create_post(request):
     return render(request, 'post_create.html', context)
 
 
-def PostDetailView(request, pk):
+def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     user = request.user
     comments = Comment.objects.filter(post=post).order_by('-date')
@@ -97,3 +95,18 @@ def PostDetailView(request, pk):
                }
     return render(request, 'post_detail.html', context)
 
+
+class TagsView(ListView):
+    template_name = 'tag.html'
+    model = Post
+    context_object_name = 'posts'
+    slug_url_kwarg = 'the_slug'
+
+    def get_queryset(self, **kwargs):
+        tag = get_object_or_404(Tag, slug=self.kwargs['the_slug'])
+        return Post.objects.filter(tags=tag)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tag'] = Tag.objects.get(slug=self.kwargs['the_slug'])
+        return context

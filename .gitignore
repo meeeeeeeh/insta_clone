@@ -1,3 +1,4 @@
 poetry.lock
 pyproject.toml
 media
+db.sqlite3
