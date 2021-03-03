@@ -9,4 +9,5 @@ urlpatterns = [
     path('post/like/<uuid:pk>', like, name='post_like'),
     path('post/new', create_post, name="post_create"),
     path('tags/<slug:the_slug>', TagsView.as_view(), name='tags'),
+    path('explore/', ExploreView.as_view(), name='explore'),
 ]

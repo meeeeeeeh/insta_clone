@@ -110,3 +110,12 @@ class TagsView(ListView):
         context = super().get_context_data(**kwargs)
         context['tag'] = Tag.objects.get(slug=self.kwargs['the_slug'])
         return context
+
+
+class ExploreView(ListView):
+    template_name = 'explore.html'
+    model = Post
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        return Post.objects.all().order_by('-posted')

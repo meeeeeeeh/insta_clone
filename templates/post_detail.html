@@ -47,7 +47,7 @@
       </div>
       <div class="media-content">
 <!--        <p class="title is-4">John Smith</p>-->
-        <p class="subtitle is-4">@{{post.user.username}}</p>
+          <p class="subtitle is-4"><a href="{% url 'authentification:profile' post.user.username %}">@{{post.user.username}}</a></p>
       </div>
     </div>
 
