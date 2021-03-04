@@ -11,7 +11,7 @@ from django.shortcuts import get_object_or_404
 from .models import Profile
 
 
-def SignUp(request):
+def sign_up(request):
     if request.method == "POST":
         form = SignupForm(request.POST)
         if form.is_valid():
@@ -28,7 +28,7 @@ def SignUp(request):
 
 
 @login_required
-def PasswordChange(request):
+def password_change(request):
     user = request.user
     if request.method == "POST":
         form = ChangePasswordForm(request.POST)
@@ -45,7 +45,7 @@ def PasswordChange(request):
     return render(request, 'change_password.html', context)
 
 
-def PasswordChangeDone(request):
+def password_change_done(request):
     return render(request, 'change_password_done.html')
 
 

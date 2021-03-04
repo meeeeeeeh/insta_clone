@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{% static '../static/css/bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static '../static/css/style.css' %}">
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
@@ -38,7 +39,7 @@
         <span class="material-icons">notifications</span>
         Notifications
         {% if noti_count %}
-        <span style="position: absolute; top: 1px; right: -4px; padding: 1px 7px; border-radius: 50%; background: red; color: white; font-weight: bold;">
+        <span class="badge">
           {{ noti_count }}
         </span>
         {% endif %}
@@ -97,4 +98,7 @@
  {% block content %}
   {% endblock %}
   </body>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="{% static 'js/init.js' %}"></script>
+  <script src="{% static 'js/slider.js' %}"></script>
 </html>

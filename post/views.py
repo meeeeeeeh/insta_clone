@@ -2,24 +2,37 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from .models import *
 from .forms import NewPostForm
-from django.views.generic import ListView, CreateView, DetailView
+from django.views.generic import ListView, TemplateView
 from django.contrib.auth.decorators import login_required
 from comment.models import Comment
 from comment.forms import CommentForm
+from stories.models import StoryStream
 
 
-class HomeView(ListView):
-    model = Post
+# class HomeView(ListView):
+#     model = Post
+#     template_name = 'index.html'
+#     context_object_name = 'posts'
+#
+#     def get_queryset(self):
+#         posts_ids = []
+#         posts = Stream.objects.filter(user=self.request.user)
+#         for post in posts:
+#             posts_ids.append(post.post_id)
+#         post_items = Post.objects.filter(id__in=posts_ids).all().order_by('-posted')
+#         return post_items
+class HomeView(TemplateView):
     template_name = 'index.html'
-    context_object_name = 'posts'
 
-    def get_queryset(self):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         posts_ids = []
         posts = Stream.objects.filter(user=self.request.user)
         for post in posts:
             posts_ids.append(post.post_id)
-        post_items = Post.objects.filter(id__in=posts_ids).all().order_by('-posted')
-        return post_items
+        context['posts'] = Post.objects.filter(id__in=posts_ids).all().order_by('-posted')
+        context['stories'] = StoryStream.objects.filter(user=self.request.user)
+        return context
 
 
 @login_required
