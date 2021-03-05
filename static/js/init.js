@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    const modal = $('.model');
+    const modal = $('.modal');
     slideIndex = 1;
 
     $('.showModal').click(function(event){

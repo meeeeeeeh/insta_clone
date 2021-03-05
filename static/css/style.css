@@ -8,8 +8,6 @@
 	color: white;
 	font-weight: bold;
 }
-
-
 * {box-sizing:border-box}
 
 /* Slideshow container */
@@ -86,7 +84,6 @@
 .active, .dot:hover {
   background-color: #717171;
 }
-
 
 /* Fading animation */
 .fade {

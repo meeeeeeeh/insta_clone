@@ -3,15 +3,7 @@
 {% block content %}
 
 <div style="padding-right: 9px;">
-    <a href="{% url 'stories:new_story' %}" class="showModal">
-    <figure class="image is-128x128">
-      <img class="is-rounded" src="{{ request.user.profile.picture.url }}">
-        <div class="media-content has-text-centered">
-        <p class="title is-6">@{{ request.user.username }}</p>
-        </div>
-    </figure>
-    </a>
-  </div>
+
  <div style="overflow-x: scroll;" class="columns">
 
 {% for story in stories %}
@@ -26,7 +18,7 @@
     </a>
   </div>
 {% endfor %}
-
+ </div>
   </div>
 
 

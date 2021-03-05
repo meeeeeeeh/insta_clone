@@ -54,7 +54,10 @@
         <span class="material-icons">face</span>
         Profile
       </a>
-
+      <a href="{% url 'stories:new_story' %}" class="navbar-item">
+          <i style="color: green;" class="material-icons">photo_filter</i>
+          <strong>New Story</strong>
+        </a>
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">
           <span class="material-icons">settings</span>
@@ -99,6 +102,6 @@
   {% endblock %}
   </body>
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="{% static 'js/init.js' %}"></script>
-  <script src="{% static 'js/slider.js' %}"></script>
+  <script src="{% static '../static/js/init.js' %}"></script>
+  <script src="{% static '../static/js/slider.js' %}"></script>
 </html>
