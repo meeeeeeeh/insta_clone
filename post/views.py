@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from comment.models import Comment
 from comment.forms import CommentForm
 from stories.models import StoryStream
+from django.db.models import Q
 
 
 # class HomeView(ListView):
@@ -125,10 +126,23 @@ class TagsView(ListView):
         return context
 
 
-class ExploreView(ListView):
-    template_name = 'explore.html'
-    model = Post
-    context_object_name = 'posts'
+# class ExploreView(ListView):
+#     template_name = 'explore.html'
+#     model = Post
+#     context_object_name = 'posts'
+#
+#     def get_queryset(self):
+#         return Post.objects.all().order_by('-posted').exclude(user=self.request.user)
 
-    def get_queryset(self):
-        return Post.objects.all().order_by('-posted')
+
+class ExploreView(TemplateView):
+    template_name = 'explore.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET.get('q')
+        if query:
+            context['users'] = User.objects.filter(Q(username__icontains=query))\
+                .exclude(username=self.request.user.username)
+        context['posts'] = Post.objects.all().order_by('-posted').exclude(user=self.request.user)
+        return context
