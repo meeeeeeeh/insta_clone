@@ -29,6 +29,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -36,13 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'channels',
     'authentification',
     'comment',
     'follow',
     'notifications',
     'post',
     'stories',
+    'direct',
 
 ]
 
@@ -76,6 +77,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'insta_clone.wsgi.application'
+ASGI_APPLICATION = 'insta_clone.routing.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -129,6 +140,7 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 
 LOGIN_REDIRECT_URL = 'post:index'
 LOGOUT_REDIRECT_URL = 'login'

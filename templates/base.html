@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static '../static/css/bulma.min.css' %}">
-    <link rel="stylesheet" href="{% static '../static/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
@@ -45,7 +45,7 @@
         {% endif %}
       </a>
 
-      <a class="navbar-item">
+      <a href="{% url 'direct:directs' %}" class="navbar-item">
         <span class="material-icons">inbox</span>
         Inbox
       </a>
@@ -102,7 +102,7 @@
   {% endblock %}
   </body>
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="{% static '../static/js/init.js' %}"></script>
-  <script src="{% static '../static/js/slider.js' %}"></script>
-  <script src="{% static '../static/js/reconnecting-websocket.js' %}"></script>
+  <script src="{% static 'js/init.js' %}"></script>
+  <script src="{% static 'js/slider.js' %}"></script>
+  <script src="{% static 'js/reconnecting-websocket.js' %}"></script>
 </html>

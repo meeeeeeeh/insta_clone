@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="columns is-mobile">
+
+
+  <div class="column is-one-quarter">
+  <aside class="menu">
+    <h1 class="title is-2">
+    Messages
+    </h1>
+
+  <ul style="overflow-y: scroll; height: 500px" class="menu-list">
+{% for direct in directs %}
+  <a {%if direct.sender.username == request.user.username%} href= "{% url 'direct:direct-with-user' direct.receiver.username%}" {%else%} href= "{% url 'direct:direct-with-user' direct.sender.username%}" {%endif%}>
+    <li>
+<div class="box">
+  <article class="media">
+    <div class="media-left">
+    </div>
+    <div class="media-content">
+      <div class="content">
+
+        <p>
+          {% if direct.sender.username == request.user.username %}
+          {% if direct.receiver.profile.picture %}
+            <img src="{{ direct.receiver.profile.picture.url }}" alt="Placeholder image">
+          {% else %}
+            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+          {% endif %}
+          <strong>@{{ direct.receiver.username }}</strong>
+          {%else%}
+          {% if direct.receiver.profile.picture %}
+            <img src="{{ direct.sender.profile.picture.url }}" alt="Placeholder image">
+          {% else %}
+            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+          {% endif %}
+          <strong>@{{ direct.sender.username }}</strong>
+          {%endif%}
+        </p>
+
+      </div>
+    </div>
+  </article>
+</div>
+    </li>
+  </a>
+{% endfor %}
+  </ul>
+  </aside>
+  </div>
+
+<div class="messages" style="margin-top:4%; width:70%">
+
+  <div class="message-box">
+
+    <div class="peoples-mesg-box">
+      <div class="conversation-head">
+        <span>Chat with {{ user_json }}</span>
+      </div>
+      <ul class="chatting-area">
+      </ul>
+      {% if user_json %}
+      <div class="message-text-container" style="margin-top:40%">
+        <form onsubmit="return false;">
+          <textarea id="chat-message-input"></textarea>
+          <em id="typing"></em>
+          <button title="send" id="chat-message-submit"><i class="material-icons">send</i></button>
+        </form>
+      </div>
+      {%endif%}
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+  $(document).ready(function () {
+            let messages = $('.chatting-area');
+            {#console.log(messages.prop("scrollHeight"));#}
+            messages.animate({
+                scrollTop: messages.offset().top + 50
+            }, 'slow');
+        });
+
+        let userJson = {{ user_json }};
+        let username = {{ username }};
+
+        let chatSocket = new ReconnectingWebSocket(
+            'ws://' + window.location.host +
+            '/ws/chat/' + userJson + '/');
+
+        chatSocket.onopen = function (e) {
+            fetchMessages();
+        };
+
+        chatSocket.onmessage = function (e) {
+            let data = JSON.parse(e.data);
+            if (data['command'] === 'messages') {
+                for (let i = 0; i < data['messages'].length; i++) {
+                    createMessage(data['messages'][i]);
+                }
+            } else if (data['command'] === 'new_message') {
+                createMessage(data['message']);
+            } else if (data['command'] === 'typing_start') {
+                if (data["message"] !== userJson) {
+                    document.getElementById("typing").innerHTML = userJson + " is typing";
+                }
+            } else if (data['command'] === 'typing_stop') {
+                document.getElementById("typing").innerHTML = "";
+            }
+        };
+
+        document.querySelector('#chat-message-input').addEventListener("keypress", function () {
+            {#chatSocket.emit("typing", username);#}
+            chatSocket.send(JSON.stringify({
+                'command': 'typing_start',
+                'from': userJson,
+            }));
+        });
+
+        document.querySelector('#chat-message-input').addEventListener("keyup", function () {
+            setTimeout(() => {
+                chatSocket.send(JSON.stringify({
+                    'command': 'typing_stop',
+                }));
+            }, 300);
+        });
+
+        {% comment %}chatSocket.ontyping = function (data) {
+            console.log(data);
+        };{% endcomment %}
+
+        chatSocket.onclose = function (e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        document.querySelector('#chat-message-input').onkeyup = function (e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#chat-message-submit').click();
+            }
+        };
+
+        document.querySelector('#chat-message-submit').onclick = function (e) {
+            let messageInputDom = document.getElementById('chat-message-input');
+            let message = messageInputDom.value;
+            chatSocket.send(JSON.stringify({
+                'command': 'new_message',
+                'message': message,
+                'from': username,
+                'receiver': userJson
+            }));
+
+            messageInputDom.value = '';
+
+            let messages = $('#messages');
+            messages.animate({
+                scrollTop: messages.offset().top + 50
+            }, 1000);
+        };
+
+        function fetchMessages() {
+            chatSocket.send(JSON.stringify({'command': 'fetch_messages', 'sender': username, 'receiver': userJson}));
+        }
+
+        function createMessage(data) {
+            let sender = data['sender'];
+            let user_class = "";
+
+            if (sender === username) {
+                user_class = "me";
+            } else {
+                user_class = "you";
+            }
+
+            let message = `<li class="${user_class}">
+
+                                <p>${data.message}</p>
+                            </li>`;
+
+            $('.chatting-area').append(message);
+        }
+</script>
+
+{% endblock %}

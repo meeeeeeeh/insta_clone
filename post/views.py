@@ -126,15 +126,6 @@ class TagsView(ListView):
         return context
 
 
-# class ExploreView(ListView):
-#     template_name = 'explore.html'
-#     model = Post
-#     context_object_name = 'posts'
-#
-#     def get_queryset(self):
-#         return Post.objects.all().order_by('-posted').exclude(user=self.request.user)
-
-
 class ExploreView(TemplateView):
     template_name = 'explore.html'
 
@@ -142,7 +133,7 @@ class ExploreView(TemplateView):
         context = super().get_context_data(**kwargs)
         query = self.request.GET.get('q')
         if query:
-            context['users'] = User.objects.filter(Q(username__icontains=query))\
+            context['users'] = User.objects.filter(Q(username__icontains=query)) \
                 .exclude(username=self.request.user.username)
         context['posts'] = Post.objects.all().order_by('-posted').exclude(user=self.request.user)
         return context

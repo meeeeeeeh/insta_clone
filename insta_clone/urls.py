@@ -10,4 +10,5 @@ urlpatterns = [
     path('', include('follow.urls')),
     path('', include('notifications.urls')),
     path('stories/', include('stories.urls')),
+    path('', include('direct.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

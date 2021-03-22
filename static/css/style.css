@@ -102,3 +102,242 @@
   from {opacity: .4}
   to {opacity: 1}
 }
+
+
+
+
+
+
+
+
+
+.message-box {
+    display: inline-block;
+    width: 100%;
+}
+
+.peoples {
+    border-right: 1px solid #e1e8ed;
+    display: inline-block;
+    list-style: outside none none;
+    margin-bottom: 0;
+    max-height: 462px;
+    padding-left: 0;
+    position: relative;
+    width: 200px;
+}
+
+.peoples > li {
+    border-bottom: 1px solid #e1e8ed;
+    cursor: pointer;
+    display: inline-block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 0px;
+    width: 100%;
+    position: relative;
+    transition: all 0.2s linear 0s;
+}
+
+.peoples > li:hover {
+    background: #fff;
+}
+
+.peoples > li figure {
+    display: inline-block;
+    margin-bottom: 0;
+    max-width: 45px;
+    min-width: 45px;
+    vertical-align: middle;
+    width: 45px;
+    position: relative;
+}
+
+.people-name {
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: middle;
+    width: 66%;
+}
+
+.people-name > span {
+    display: inline-block;
+    font-size: 14px;
+    text-transform: capitalize;
+    font-weight: 400;
+}
+
+.people-name > i {
+    background: lightcoral none repeat scroll 0 0;
+    border-radius: 3px;
+    color: #fff;
+    display: inline-block;
+    font-size: 11px;
+    line-height: initial;
+    padding: 0 5px;
+    position: relative;
+    right: -20px;
+}
+
+.peoples > li:last-child {
+    border-bottom: 0 none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.peoples > li span.status {
+    left: 0;
+}
+
+.peoples-mesg-box {
+    display: inline-block;
+    vertical-align: top;
+    width: 64.5%;
+    padding-left: 15px;
+}
+
+.peoples-mesg-box > ul.chatting-area {
+    display: inline-block;
+    list-style: outside none none;
+    margin-bottom: 0;
+    max-height: 322px;
+    padding: 40px 15px 10px 0;
+    width: 100%;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.peoples-mesg-box > ul li {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.peoples-mesg-box > ul li > figure {
+    display: inline-block;
+    margin-bottom: 0;
+    max-width: 32px;
+    min-width: 32px;
+    width: 32px;
+    vertical-align: top;
+}
+
+.peoples-mesg-box > ul > li p {
+    display: inline-block;
+    font-size: 14px;
+    line-height: initial;
+    margin-bottom: 0;
+    margin-left: 10px;
+    vertical-align: top;
+    width: 75%;
+    padding: 5px 8px;
+    position: relative;
+    color: #434343;
+    background: rgba(39, 170, 225, 0.1);
+}
+
+.peoples-mesg-box > ul > li p::before {
+    top: 4px;
+    border-color: transparent;
+}
+
+.peoples-mesg-box > ul > li p::after {
+    top: 6px;
+    border-right-color: rgba(202, 239, 142, .65);
+}
+
+.peoples-mesg-box > ul > li.me p::before {
+    border-left: 11px solid transparent;
+    border-right: initial;
+    left: auto;
+    right: -11px;
+}
+
+.peoples-mesg-box > ul > li.you p {
+    background: rgba(202, 239, 142, .65);
+}
+
+.peoples-mesg-box > ul > li.me p::after {
+    border-left: 10px solid rgba(39, 170, 225, 0.1);
+    border-right: initial;
+    left: auto;
+    right: -10px;
+}
+
+.peoples-mesg-box > ul li.me {
+    direction: rtl;
+    text-align: right;
+}
+
+.peoples-mesg-box > ul li.me p {
+    margin-left: 0;
+    margin-right: 10px;
+    text-align: left;
+    direction: ltr;
+}
+
+.conversation-head {
+    border-bottom: 1px solid #eaeaea;
+    display: inline-block;
+    padding-bottom: 10px;
+    width: 100%;
+    margin-bottom: 10px;
+    padding-top: 10px;
+}
+
+.conversation-head > figure {
+    display: inline-block;
+    margin-bottom: 0;
+    max-width: 45px;
+    vertical-align: middle;
+    width: 45px;
+}
+
+.conversation-head > span {
+    display: inline-block;
+    font-weight: bold;
+    line-height: initial;
+    margin-left: 10px;
+    text-transform: capitalize;
+    vertical-align: middle;
+    width: 83%;
+    font-size: 18px;
+}
+
+.conversation-head > span i {
+    color: #838383;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: initial;
+    width: 100%;
+}
+
+.message-text-container textarea {
+    border-radius: 0;
+    box-sizing: content-box;
+    color: #7f7f7f;
+    height: 50px;
+    overflow: hidden;
+    resize: none;
+    display: inline-block;
+    width: 93.5%;
+}
+
+.message-text-container > form {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+}
+
+.message-text-container form button {
+    border-radius: 100%;
+    height: 30px;
+    padding: 0;
+    position: absolute;
+    right: 13px;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+}

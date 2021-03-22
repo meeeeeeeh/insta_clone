@@ -13,13 +13,6 @@ class ChatConsumer(WebsocketConsumer):
         self.user = None
         self.room = None
 
-    commands = {
-        'fetch_messages': fetch_messages,
-        'new_message': new_message,
-        'typing_start': typing_start,
-        'typing_stop': typing_stop,
-    }
-
     def connect(self):
         self.user = self.scope['user']
         self.receiver = self.scope['url_route']['kwargs']['receiver']
@@ -98,13 +91,20 @@ class ChatConsumer(WebsocketConsumer):
     def fetch_messages(self, data):
         sender = User.objects.get(username=data['sender'])
         receiver = User.objects.get(username=data['receiver'])
-        messages = Message.objects.filter(Q(sender=sender, receiver=receiver) | Q(sender=receiver, receiver=sender))\
-            .order_by('time_stamp')[:20]
+        messages = Message.objects.filter(Q(sender=sender, receiver=receiver) | Q(sender=receiver, receiver=sender)) \
+                       .order_by('time_stamp')[:20]
         content = {
             'command': 'messages',
             'messages': self.messages_to_json(messages)
         }
         self.send_message(content)
+
+    commands = {
+        'fetch_messages': fetch_messages,
+        'new_message': new_message,
+        'typing_start': typing_start,
+        'typing_stop': typing_stop,
+    }
 
     @staticmethod
     def message_to_json(message):

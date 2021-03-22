@@ -47,7 +47,7 @@
             <a href="{% url 'authentification:profile' user.username %}"><strong>@{{user.username}}</strong></a>
           <p><small>{{ user.profile.first_name }} {{ user.profile.last_name }}</small></p>
 
-        <a href="" class="button is-info">Send a message!</a>
+        <a href="{% url 'direct:create-direct' user.id %}" class="button is-info">Send a message!</a>
       </div>
     </div>
 
