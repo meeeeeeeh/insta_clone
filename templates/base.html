@@ -3,8 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static '../static/css/bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static '../static/css/style.css' %}">
+    <script type="text/javascript" src="{% static '../static/js/main.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '../static/js/init.js' %}"></script>
+    <script type="text/javascript" src="{% static '../static/js/slider.js' %}"></script>
+    <script type="text/javascript" src="{% static '../static/js/reconnecting-websocket.min.js' %}"></script>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
@@ -13,7 +17,7 @@
   <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="{% url 'post:index' %}">
-      <img src="{% static '../static/img/logo.png' %}" width="36" height="28">
+      <img src="../static/img/logo.png" width="36" height="28">
     </a>
 
     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -100,9 +104,10 @@
 </nav>
  {% block content %}
   {% endblock %}
+
+
+
+  {% block scripts %}
+  {% endblock %}
   </body>
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="{% static 'js/init.js' %}"></script>
-  <script src="{% static 'js/slider.js' %}"></script>
-  <script src="{% static 'js/reconnecting-websocket.js' %}"></script>
 </html>

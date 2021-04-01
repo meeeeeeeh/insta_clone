@@ -3,7 +3,6 @@ from channels.routing import ProtocolTypeRouter, URLRouter
 
 import direct.routing
 
-
 application = ProtocolTypeRouter({
     'websocket': AuthMiddlewareStack(
         URLRouter(

@@ -1,9 +1,11 @@
 from .models import *
+from django.contrib.auth.models import User
 from channels.generic.websocket import WebsocketConsumer
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from django.db.models import Q
 import json
+
 
 
 class ChatConsumer(WebsocketConsumer):
@@ -16,7 +18,7 @@ class ChatConsumer(WebsocketConsumer):
     def connect(self):
         self.user = self.scope['user']
         self.receiver = self.scope['url_route']['kwargs']['receiver']
-        author_user = User.object.filter(username=self.user.username)[0]
+        author_user = User.objects.filter(username=self.user.username)[0]
         receiver_user = User.objects.filter(username=self.receiver)[0]
         if Room.objects.filter(
                 Q(sender=author_user, receiver=receiver_user) | Q(sender=receiver_user, receiver=author_user)).exists():
@@ -26,7 +28,7 @@ class ChatConsumer(WebsocketConsumer):
             self.room = Room.objects.create(sender=author_user, receiver=receiver_user)
         self.room_group_name = 'chat_%s' % str(self.room.id)
         async_to_sync(self.channel_layer.group_add)(
-            self.room.group_name,
+            self.room_group_name,
             self.channel_name
         )
         self.accept()

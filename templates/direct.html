@@ -51,7 +51,7 @@
   </aside>
   </div>
 
-<div class="messages" style="margin-top:4%; width:70%">
+<div class="messages" style="margin-top:4%; width:70%;">
 
   <div class="message-box">
 
@@ -62,12 +62,15 @@
       <ul class="chatting-area">
       </ul>
       {% if user_json %}
-      <div class="message-text-container" style="margin-top:40%">
+      <div class="message-text-container">
         <form onsubmit="return false;">
-          <textarea id="chat-message-input"></textarea>
-          <em id="typing"></em>
+
+          <textarea id="chat-message-input" ></textarea>
+
+
           <button title="send" id="chat-message-submit"><i class="material-icons">send</i></button>
         </form>
+        <em id="typing"></em>
       </div>
       {%endif%}
     </div>
@@ -80,7 +83,7 @@
 {% block scripts %}
 
 <script>
-  $(document).ready(function () {
+        $(document).ready(function () {
             let messages = $('.chatting-area');
             {#console.log(messages.prop("scrollHeight"));#}
             messages.animate({
@@ -124,12 +127,12 @@
             }));
         });
 
-        document.querySelector('#chat-message-input').addEventListener("keyup", function () {
+        document.querySelector('#chat-message-input').addEventListener("keypress", function () {
             setTimeout(() => {
                 chatSocket.send(JSON.stringify({
                     'command': 'typing_stop',
                 }));
-            }, 300);
+            }, 1000);
         });
 
         {% comment %}chatSocket.ontyping = function (data) {
@@ -166,7 +169,7 @@
 
         function fetchMessages() {
             chatSocket.send(JSON.stringify({'command': 'fetch_messages', 'sender': username, 'receiver': userJson}));
-        }
+        };
 
         function createMessage(data) {
             let sender = data['sender'];
@@ -180,11 +183,12 @@
 
             let message = `<li class="${user_class}">
 
-                                <p>${data.message}</p>
+                                <p id='messages'>${data.message}</p>
                             </li>`;
 
             $('.chatting-area').append(message);
-        }
+        };
+
 </script>
 
 {% endblock %}

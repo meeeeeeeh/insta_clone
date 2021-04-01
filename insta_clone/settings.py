@@ -24,9 +24,11 @@ SECRET_KEY = 'mgl8g@$p0a7-3if9lo+4q^37yw%&q*vn+&j!k9zu6c#(4nu%9('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
+
+os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 
 INSTALLED_APPS = [
     'channels',
@@ -138,9 +140,11 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
+
 
 LOGIN_REDIRECT_URL = 'post:index'
 LOGOUT_REDIRECT_URL = 'login'
