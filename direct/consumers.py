@@ -7,7 +7,6 @@ from django.db.models import Q
 import json
 
 
-
 class ChatConsumer(WebsocketConsumer):
 
     def __init__(self, *args, **kwargs):
