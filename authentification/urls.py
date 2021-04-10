@@ -12,4 +12,6 @@ urlpatterns = [
     path('change_password_done', password_change_done, name="change_password_done"),
     path('profile/<username>', UserProfile.as_view(), name="profile"),
     path('profile/edit_profile/<pk>', EditProfile.as_view(), name="edit_profile"),
+    path('followers/<username>', UserFollowers.as_view(), name="user_followers"),
+    path('following/<username>', UserFollowing.as_view(), name="user_following")
 ]

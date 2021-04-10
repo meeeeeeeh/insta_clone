@@ -34,6 +34,9 @@
                 </div>
                 </div>
                 {% endif %}
+                <div class="media-right">
+                <a href="{% url 'direct:create-direct' user.id %}" class="button is-info">Write message</a>
+                </div>
                 {% endif %}
             <nav class="level is-mobile">
             <div class="level-item has-text-centered">
@@ -45,13 +48,13 @@
             <div class="level-item has-text-centered">
                 <div>
                 <p class="heading">Following</p>
-                <p class="title">{{following_count}}</p>
+                    <a href="{% url 'authentification:user_followers' profile.user.username %}"><p class="title">{{following_count}}</p></a>
                 </div>
             </div>
             <div class="level-item has-text-centered">
                 <div>
                 <p class="heading">Followers</p>
-                <p class="title">{{followers_count}}</p>
+                    <a href="{% url 'authentification:user_followers' profile.user.username %}"><p class="title">{{followers_count}}</p></a>
                 </div>
             </div>
 

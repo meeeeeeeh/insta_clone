@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% for follower in followers %}
+<div class="box">
+  <article class="media">
+    <div class="media-left">
+      <figure class="image is-64x64">
+          {% if follower.follower.profile.picture %}
+            <img src="{{ follower.follower.profile.picture.url }}" alt="Placeholder image">
+          {% else %}
+            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+          {% endif %}
+      </figure>
+    </div>
+
+    <div class="media-content">
+      <div class="content">
+
+            <a href="{% url 'authentification:profile' follower.follower.username %}"><strong>@{{follower.follower.username}}</strong></a>
+          <p><small>{{ follower.follower.profile.first_name }} {{ follower.follower.profile.last_name }}</small></p>
+
+        <a href="{% url 'direct:create-direct' follower.follower.id %}" class="button is-info">Send a message!</a>
+      </div>
+    </div>
+
+  </article>
+</div>
+{% endfor %}
+
+
+
+
+{% endblock %}

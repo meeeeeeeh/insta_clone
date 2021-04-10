@@ -16,7 +16,7 @@ $(document).ready(function(){
                         var div_slides_html = '<div class="mySlides fade"><video width="640" controls="controls" preload="metadata"><source src="/media/'+ v.content + '#t=0.5" type="video/mp4"></video></div>'
                     }
                     else {
-                        var div_slides_html = '<div class="mySlides fade"><img src="/media/'+ v.content +'" style="width:100%"><div class="text">'+ v.caption +'</div></div>'
+                        var div_slides_html = '<div class="mySlides fade"><img src="/media/'+ v.content +'" style="width:100%"><div class="box">'+ v.caption +'</div></div>'
                     }
                     $('#jsondata').append(div_slides_html);
                 });

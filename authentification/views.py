@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from .forms import SignupForm, ChangePasswordForm, EditProfileForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
-from django.views.generic import TemplateView, UpdateView
+from django.views.generic import TemplateView, UpdateView, ListView
 from post.models import Post, Likes, Follow
 from django.shortcuts import get_object_or_404
 from .models import Profile
@@ -74,3 +74,21 @@ class EditProfile(UpdateView):
         return reverse_lazy('authentification:profile', kwargs={'username': self.request.user.username})
 
 
+class UserFollowers(TemplateView):
+    template_name = 'user_followers.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(UserFollowers, self).get_context_data(**kwargs)
+        user = get_object_or_404(User, username=kwargs["username"])
+        context['followers'] = Follow.objects.filter(following=user)
+        return context
+
+
+class UserFollowing(TemplateView):
+    template_name = 'user_following.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(UserFollowing, self).get_context_data(**kwargs)
+        user = get_object_or_404(User, username=kwargs["username"])
+        context['followings'] = Follow.objects.filter(follower=user)
+        return context

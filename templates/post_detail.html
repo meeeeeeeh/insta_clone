@@ -11,7 +11,6 @@
     <div class="slideshow-container">
 
     {% for cont in post.content.all %}
-      <!-- Full-width images with number and caption text -->
       <div class="mySlides fade">
         {% if cont.file.name|slice:"-3:" == 'jpg' or cont.file.name|slice:"-3:" == 'png' %}
           <figure class="image is-4by3">
@@ -46,7 +45,6 @@
         </figure>
       </div>
       <div class="media-content">
-<!--        <p class="title is-4">John Smith</p>-->
           <p class="subtitle is-4"><a href="{% url 'authentification:profile' post.user.username %}">@{{post.user.username}}</a></p>
       </div>
     </div>
