@@ -52,6 +52,11 @@
       <a href="{% url 'direct:directs' %}" class="navbar-item">
         <span class="material-icons">inbox</span>
         Inbox
+        {% if directs_count %}
+        <span class="badge">
+          {{ directs_count }}
+        </span>
+        {% endif %}
       </a>
 
       <a href="{% url 'authentification:profile' request.user.username %}" class="navbar-item">

@@ -15,7 +15,7 @@
 {% for direct in directs %}
   <a {%if direct.sender.username == request.user.username%} href= "{% url 'direct:direct-with-user' direct.receiver.username%}" {%else%} href= "{% url 'direct:direct-with-user' direct.sender.username%}" {%endif%}>
     <li>
-<div class="box">
+<div class="box has-background-link-light">
   <article class="media">
     <div class="media-left">
     </div>
@@ -38,8 +38,14 @@
           {% endif %}
           <strong>@{{ direct.sender.username }}</strong>
           {%endif%}
-        </p>
 
+        </p>
+        {% if not direct.messages.last.is_read %}
+        <div class="has-background-danger-dark has-text-white-bis" style="border-radius: 5px; width:50%; text-align:center;">
+          {{direct.messages.last}}
+        </div>
+
+        {% endif %}
       </div>
     </div>
   </article>
